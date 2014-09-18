@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="reccPianoImage" name="widget" native="true">
+    <widget class="reccPianoImage" name="widget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -37,20 +37,27 @@
     </widget>
    </item>
    <item>
-    <widget class="reccPianoRollInputArea" name="widget_2" native="true"/>
+    <widget class="reccPianoRollInputArea" name="widget_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
    <class>reccPianoImage</class>
-   <extends>QWidget</extends>
+   <extends>QGraphicsView</extends>
    <header>reccPianoImage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>reccPianoRollInputArea</class>
-   <extends>QScrollArea</extends>
+   <extends>QGraphicsView</extends>
    <header>reccPianoRollInputArea.h</header>
    <container>1</container>
   </customwidget>

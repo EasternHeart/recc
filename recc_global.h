@@ -9,4 +9,6 @@
 #  define RECCSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define LINE_HEIGHT 16
+
 #endif // RECC_GLOBAL_H

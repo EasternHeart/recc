@@ -1,24 +1,27 @@
 #ifndef RECCPIANOIMAGE_H
 #define RECCPIANOIMAGE_H
 
-#include <QWidget>
+#include "recc_global.h"
 
-class reccPianoImage : public QWidget
+#include <QWidget>
+#include <QGraphicsView>
+#include <QList>
+#include <QGraphicsItem>
+#include <QGraphicsScene>
+
+class reccPianoImage : public QGraphicsView
 {
     Q_OBJECT
 public:
     explicit reccPianoImage(QWidget *parent = 0);
-
-protected:
-    void paintEvent(QPaintEvent *event);
     
 signals:
     
 public slots:
 
 private:
-    int position;
-    
+    QGraphicsScene *myScene;
+    void ReScale();
 };
 
 #endif // RECCPIANOIMAGE_H
