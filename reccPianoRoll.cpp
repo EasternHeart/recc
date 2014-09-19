@@ -7,6 +7,9 @@ reccPianoRoll::reccPianoRoll(QWidget *parent) :
 {
     ui->setupUi(this);
     //DPI Hack
+
+    //setPianoImage
+    ui->widget_2->setPianoImage(this->ui->widget);
 }
 
 reccPianoRoll::~reccPianoRoll()

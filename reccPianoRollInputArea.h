@@ -10,11 +10,15 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 
+#include "reccPianoImage.h"
+
 class reccPianoRollInputArea : public QGraphicsView
 {
     Q_OBJECT
 public:
     explicit reccPianoRollInputArea(QWidget *parent = 0);
+    void setPianoImage(reccPianoImage *image);
+    void AutoMinimalLineWidth();
     
 signals:
     
@@ -27,6 +31,11 @@ private:
     double lineWidth;
     void lineWidthNormalize();
     void initLines();
+    reccPianoImage *pianoImage;
+
+protected:
+    void scrollContentsBy(int dx, int dy);
+    virtual void	resizeEvent(QResizeEvent * event);
 
 };
 

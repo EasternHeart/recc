@@ -14,6 +14,7 @@ class reccPianoImage : public QGraphicsView
     Q_OBJECT
 public:
     explicit reccPianoImage(QWidget *parent = 0);
+    friend class reccPianoRollInputArea;
     
 signals:
     
@@ -22,6 +23,8 @@ public slots:
 private:
     QGraphicsScene *myScene;
     void ReScale();
+
+
 };
 
 #endif // RECCPIANOIMAGE_H

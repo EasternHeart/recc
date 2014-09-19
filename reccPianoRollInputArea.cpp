@@ -1,6 +1,6 @@
 #include "reccPianoRollInputArea.h"
 
-
+#include <QScrollBar>
 
 reccPianoRollInputArea::reccPianoRollInputArea(QWidget *parent) :
     QGraphicsView(parent)
@@ -9,11 +9,15 @@ reccPianoRollInputArea::reccPianoRollInputArea(QWidget *parent) :
     this->setScene(myScene);
     lineItems = new QList<QGraphicsItem*>;
 
-    lineWidth = 500.0;
+    lineWidth = 0;
 
-    initLines();
+    //AutoMinimalLineWidth();
 
-    lineWidthNormalize();
+
+
+    //initLines();
+
+    //lineWidthNormalize();
 }
 
 void reccPianoRollInputArea::Extend()
@@ -24,7 +28,12 @@ void reccPianoRollInputArea::Extend()
 
 void reccPianoRollInputArea::lineWidthNormalize()
 {
-
+    QGraphicsItem *gi;
+    foreach(gi,*lineItems)
+    {
+        delete gi;
+    }
+    initLines();
 }
 
 void reccPianoRollInputArea::initLines()
@@ -51,4 +60,44 @@ void reccPianoRollInputArea::initLines()
 #undef TBLACK
 #undef TWHITE
     }
+}
+
+void reccPianoRollInputArea::setPianoImage(reccPianoImage *image)
+{
+    this->pianoImage = image;
+}
+
+void reccPianoRollInputArea::scrollContentsBy(int dx, int dy)
+{
+    int thisMin,thisMax,thisVal,imMin,imMax;
+    thisMin = this->verticalScrollBar()->minimum();
+    thisMax = this->verticalScrollBar()->maximum();
+    thisVal = this->verticalScrollBar()->value();
+    imMin = pianoImage->verticalScrollBar()->minimum();
+    imMax = pianoImage->verticalScrollBar()->maximum();
+
+    pianoImage->verticalScrollBar()->setValue(
+                ((int)(((thisVal-thisMin)*1.0)/(thisMax-thisMin)*(imMax-imMin)+imMin)));
+
+    qDebug("reccPianoRollInputArea::scrollContentsBy(%d,%d)\nthisVal = %d, thisMin = %d, thisMax = %d\n"
+           "imMin = %d, imMax = %d, Target is %d\n"
+           ,dx,dy,thisVal,thisMin,thisMax,imMin,imMax,((int)(((thisVal-thisMin)*1.0)/(thisMax-thisMin)*(imMax-imMin)+imMin)));
+
+    QGraphicsView::scrollContentsBy(dx,dy);
+}
+
+void reccPianoRollInputArea::AutoMinimalLineWidth()
+{
+    double lineWidth1 = (mapToScene(size().width(),0)-mapToScene(0,0)).x();
+    if(lineWidth1>lineWidth)
+    {
+        lineWidth = lineWidth1;
+        lineWidthNormalize();
+    }
+}
+
+void reccPianoRollInputArea::resizeEvent(QResizeEvent *event)
+{
+    AutoMinimalLineWidth();
+    QGraphicsView::resizeEvent(event);
 }
