@@ -35,3 +35,9 @@ void reccPianoImage::ReScale()
 
     this->setTransform(QTransform::fromScale(this->mapToScene(0,this->size().width()-5).x()*0.1,1));
 }
+
+void reccPianoImage::wheelEvent(QWheelEvent *event)
+{
+    //Do nothing.
+    Q_UNUSED(event)
+}

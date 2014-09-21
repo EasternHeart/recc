@@ -10,14 +10,8 @@ reccPianoRollInputArea::reccPianoRollInputArea(QWidget *parent) :
     lineItems = new QList<QGraphicsItem*>;
 
     lineWidth = 0;
+    outHorizontalScrollBar = NULL;
 
-    //AutoMinimalLineWidth();
-
-
-
-    //initLines();
-
-    //lineWidthNormalize();
 }
 
 void reccPianoRollInputArea::Extend()
@@ -79,9 +73,9 @@ void reccPianoRollInputArea::scrollContentsBy(int dx, int dy)
     pianoImage->verticalScrollBar()->setValue(
                 ((int)(((thisVal-thisMin)*1.0)/(thisMax-thisMin)*(imMax-imMin)+imMin)));
 
-    qDebug("reccPianoRollInputArea::scrollContentsBy(%d,%d)\nthisVal = %d, thisMin = %d, thisMax = %d\n"
+    /*qDebug("reccPianoRollInputArea::scrollContentsBy(%d,%d)\nthisVal = %d, thisMin = %d, thisMax = %d\n"
            "imMin = %d, imMax = %d, Target is %d\n"
-           ,dx,dy,thisVal,thisMin,thisMax,imMin,imMax,((int)(((thisVal-thisMin)*1.0)/(thisMax-thisMin)*(imMax-imMin)+imMin)));
+           ,dx,dy,thisVal,thisMin,thisMax,imMin,imMax,((int)(((thisVal-thisMin)*1.0)/(thisMax-thisMin)*(imMax-imMin)+imMin)));*/
 
     QGraphicsView::scrollContentsBy(dx,dy);
 }
@@ -100,4 +94,29 @@ void reccPianoRollInputArea::resizeEvent(QResizeEvent *event)
 {
     AutoMinimalLineWidth();
     QGraphicsView::resizeEvent(event);
+    updateScrollBarValue();
+}
+
+void reccPianoRollInputArea::setScrollBar(QScrollBar *sb)
+{
+    //this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    //this->setHorizontalScrollBar(sb);
+    outHorizontalScrollBar = sb;
+    connect(sb,SIGNAL(sliderMoved(int)),this,SLOT(syncOutHorizontalScrollBar(int)));
+    updateScrollBarValue();
+}
+
+void reccPianoRollInputArea::updateScrollBarValue()
+{
+    if(outHorizontalScrollBar)
+    {
+        outHorizontalScrollBar->setMinimum(this->horizontalScrollBar()->minimum());
+        outHorizontalScrollBar->setMaximum(this->horizontalScrollBar()->maximum());
+        outHorizontalScrollBar->setValue(this->horizontalScrollBar()->value());
+    }
+}
+
+void reccPianoRollInputArea::syncOutHorizontalScrollBar(int value)
+{
+    this->horizontalScrollBar()->setValue(/*outHorizontalScrollBar->value()*/value);
 }

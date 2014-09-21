@@ -19,10 +19,12 @@ public:
     explicit reccPianoRollInputArea(QWidget *parent = 0);
     void setPianoImage(reccPianoImage *image);
     void AutoMinimalLineWidth();
+    void setScrollBar(QScrollBar *sb);
     
 signals:
     
 public slots:
+    void syncOutHorizontalScrollBar(int value);
 
 private:
     QList<QGraphicsItem*> *lineItems;
@@ -32,6 +34,9 @@ private:
     void lineWidthNormalize();
     void initLines();
     reccPianoImage *pianoImage;
+    QScrollBar *outHorizontalScrollBar;
+    void updateScrollBarValue();
+
 
 protected:
     void scrollContentsBy(int dx, int dy);

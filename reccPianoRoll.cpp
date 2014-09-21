@@ -10,6 +10,7 @@ reccPianoRoll::reccPianoRoll(QWidget *parent) :
 
     //setPianoImage
     ui->widget_2->setPianoImage(this->ui->widget);
+    ui->widget_2->setScrollBar(this->ui->horizontalScrollBar);
 }
 
 reccPianoRoll::~reccPianoRoll()

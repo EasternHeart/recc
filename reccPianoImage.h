@@ -24,6 +24,8 @@ private:
     QGraphicsScene *myScene;
     void ReScale();
 
+protected:
+    void wheelEvent ( QWheelEvent * event );
 
 };
 
