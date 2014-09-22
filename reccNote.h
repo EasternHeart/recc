@@ -1,18 +1,31 @@
 #ifndef RECCNOTE_H
 #define RECCNOTE_H
 
-#include <QObject>
 
-class reccNote : public QObject
+#include "reccNoteUserData.h"
+
+struct reccNote
 {
-    Q_OBJECT
 public:
-    explicit reccNote(QObject *parent = 0);
+    reccNote();
+
+    reccNote(const reccNote &n);
     
-signals:
+    int position;
+    int length;
+    int note;
+    QList<double> *pitchBend;
     
-public slots:
+    QString lyric;
+    QString xsampa;
     
+    reccNoteUserData *userData;
+
+    bool operator == (const reccNote& note) const;
+    
+    //QByteArray serialize();
 };
+
+uint qHash(const reccNote &note,uint seed = 0);
 
 #endif // RECCNOTE_H

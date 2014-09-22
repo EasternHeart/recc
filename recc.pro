@@ -17,14 +17,18 @@ SOURCES += \
     reccNote.cpp \
     reccPianoRoll.cpp \
     reccPianoImage.cpp \
-    reccPianoRollInputArea.cpp
+    reccPianoRollInputArea.cpp \
+    reccNoteUserData.cpp \
+    reccGraphicsPitchItem.cpp
 
 HEADERS +=\
         recc_global.h \
     reccNote.h \
     reccPianoRoll.h \
     reccPianoImage.h \
-    reccPianoRollInputArea.h
+    reccPianoRollInputArea.h \
+    reccNoteUserData.h \
+    reccGraphicsPitchItem.h
 
 unix:!symbian {
     maemo5 {

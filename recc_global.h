@@ -11,4 +11,6 @@
 
 #define LINE_HEIGHT 16
 
+#define WIDTH_PER_TICK 0.26667
+
 #endif // RECC_GLOBAL_H

@@ -12,6 +12,15 @@ reccPianoRollInputArea::reccPianoRollInputArea(QWidget *parent) :
     lineWidth = 0;
     outHorizontalScrollBar = NULL;
 
+    {
+        reccNote n;
+        n.position=0;
+        n.note = 32;
+        n.length=1920;
+        n.lyric="a";
+        n.xsampa="a";
+        this->addNoteAndShow(n);
+    }
 }
 
 void reccPianoRollInputArea::Extend()
@@ -119,4 +128,30 @@ void reccPianoRollInputArea::updateScrollBarValue()
 void reccPianoRollInputArea::syncOutHorizontalScrollBar(int value)
 {
     this->horizontalScrollBar()->setValue(/*outHorizontalScrollBar->value()*/value);
+}
+
+static bool notePositionLessThan(const reccNote &s1, const reccNote &s2)
+{
+    return s1.position < s2.position;
+}
+
+
+void reccPianoRollInputArea::addNoteAndShow(const reccNote &note)
+{
+    reccPianoRollDisplayedNoteItems di;
+    noteDisplayItems.insert(note,di);
+    if(lineWidth < (note.position+note.length)*WIDTH_PER_TICK)
+    {
+        lineWidth = (note.position+note.length)*WIDTH_PER_TICK;
+        lineWidthNormalize();
+    }
+    di.background = myScene->addRect(note.position*WIDTH_PER_TICK,
+                                     -note.note*LINE_HEIGHT,
+                                     note.length*WIDTH_PER_TICK,
+                                     LINE_HEIGHT,QPen(),QBrush(QColor(0x66,0xcc,0xff)));
+    di.lyric = myScene->addText(note.lyric + " [" + note.xsampa + "]");
+    di.lyric->setPos(note.position*WIDTH_PER_TICK,
+                     -note.note*LINE_HEIGHT);
+    di.pitch = NULL;
+    notes.append(note);
 }

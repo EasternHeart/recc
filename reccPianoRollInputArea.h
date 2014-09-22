@@ -9,17 +9,32 @@
 #include <QList>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
+#include <QGraphicsTextItem>
+#include <QGraphicsRectItem>
 
 #include "reccPianoImage.h"
+#include "reccNote.h"
+#include "reccGraphicsPitchItem.h"
+
+struct reccPianoRollDisplayedNoteItems
+{
+    QGraphicsRectItem *background;
+    QGraphicsTextItem *lyric;
+    reccGraphicsPitchItem *pitch;
+};
 
 class reccPianoRollInputArea : public QGraphicsView
 {
     Q_OBJECT
+    
+    friend class reccPianoRoll;
+    
 public:
     explicit reccPianoRollInputArea(QWidget *parent = 0);
     void setPianoImage(reccPianoImage *image);
     void AutoMinimalLineWidth();
     void setScrollBar(QScrollBar *sb);
+    void addNoteAndShow(const reccNote &note);
     
 signals:
     
@@ -36,6 +51,9 @@ private:
     reccPianoImage *pianoImage;
     QScrollBar *outHorizontalScrollBar;
     void updateScrollBarValue();
+
+    QList<reccNote> notes;
+    QHash<reccNote,reccPianoRollDisplayedNoteItems> noteDisplayItems;
 
 
 protected:
